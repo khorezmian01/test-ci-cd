@@ -40,7 +40,7 @@ jobs:
         env:
           SERVER_USER: 'root'
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PATH: 'root/backend/cicd'
+          SERVER_PATH: '/root/backend/cicd'
         run: |
           scp -i private_key -o StrictHostKeyChecking=no target/*.jar $SERVER_USER@$SERVER_HOST:$SERVER_PATH
         continue-on-error: false
@@ -49,7 +49,7 @@ jobs:
         env:
           SERVER_USER: 'root'
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PATH: 'root/backend/cicd'
+          SERVER_PATH: '/root/backend/cicd'
         run: |
           ssh -i private_key -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST "
           if pgrep -f 'java -jar $SERVER_PATH/test-ci-cd.jar'; then
@@ -63,7 +63,7 @@ jobs:
         env:
           SERVER_USER: 'root'
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PATH: 'root/backend/cicd'
+          SERVER_PATH: '/root/backend/cicd'
         run: |
           ssh -i private_key -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST "nohup java -jar $SERVER_PATH/test-ci-cd.jar > /dev/null 2>&1 &"
         continue-on-error: false
