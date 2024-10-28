@@ -38,18 +38,18 @@ jobs:
 
       - name: Upload .jar to server
         env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_USER: 'root'
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PATH: ${{ secrets.SERVER_PATH }}
+          SERVER_PATH: 'root/backend/cicd'
         run: |
           scp -i private_key -o StrictHostKeyChecking=no target/*.jar $SERVER_USER@$SERVER_HOST:$SERVER_PATH
         continue-on-error: false
 
       - name: Stop existing Java process
         env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_USER: 'root'
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PATH: ${{ secrets.SERVER_PATH }}
+          SERVER_PATH: 'root/backend/cicd'
         run: |
           ssh -i private_key -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST "
           if pgrep -f 'java -jar $SERVER_PATH/test-ci-cd.jar'; then
@@ -61,9 +61,9 @@ jobs:
 
       - name: Start new Java process
         env:
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_USER: 'root'
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PATH: ${{ secrets.SERVER_PATH }}
+          SERVER_PATH: 'root/backend/cicd'
         run: |
           ssh -i private_key -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST "nohup java -jar $SERVER_PATH/test-ci-cd.jar > /dev/null 2>&1 &"
         continue-on-error: false
@@ -72,8 +72,4 @@ jobs:
         if: always()
         run: rm private_key
 
-      - name: Debug Environment Variables
-        run: |
-          echo "SERVER_USER: $SERVER_USER"
-          echo "SERVER_HOST: $SERVER_HOST"
-          echo "SERVER_PATH: $SERVER_PATH"
+
