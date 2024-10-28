@@ -71,3 +71,9 @@ jobs:
       - name: Cleanup
         if: always()
         run: rm private_key
+
+      - name: Debug Environment Variables
+        run: |
+          echo "SERVER_USER: $SERVER_USER"
+          echo "SERVER_HOST: $SERVER_HOST"
+          echo "SERVER_PATH: $SERVER_PATH"
